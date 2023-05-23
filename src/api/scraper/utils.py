@@ -13,11 +13,14 @@ def prepare_url(url):
         return f"{base_url}{url}"
 
 
-def parse_pap(subdomain):
-    array_of_links = []
-    res = requests.get(f'{base_url}/{subdomain}')
+def parse_pap(subdomain, page):
+    link_dict = {}
+    res = requests.get(
+        f'{base_url}/{subdomain}?page={page}') if subdomain else requests.get(f'{base_url}/{subdomain}')
     soup = BeautifulSoup(res.text, 'html.parser')
     news_list = soup.find_all('ul', class_='newsList')
+    total_pages = soup.find('a', rel='last')
+
     news_found = 0
 
     if news_list:
@@ -29,33 +32,40 @@ def parse_pap(subdomain):
                 for link in links:
                     link_text = link.text.strip()
                     if len(link_text) > 0:
-                        obj = {
-                            "title": link_text,
-                            "link": prepare_url(link['href']),
-                            "article": None
-                        }
-                        array_of_links.append(obj)
-                        link_future = executor.submit(
-                            parse_article, link['href'])
-                        link_futures.append((link_future, obj))
+                        link_url = prepare_url(link['href'])
+                        if link_url not in link_dict:
+                            obj = {
+                                "title": link_text,
+                                "link": link_url,
+                                "article": None
+                            }
+                            link_dict[link_url] = obj
+                            link_future = executor.submit(
+                                parse_article, link['href'])
+                            link_futures.append((link_future, obj))
+                            news_found += 1
 
             for link_future, obj in link_futures:
                 article = link_future.result()
                 obj['article'] = article
-                if article:
-                    news_found += 1
+
+    unique_links = list(link_dict.values())
 
     if len(subdomain) > 0 and subdomain not in languages:
+        prev = f"/api/{subdomain}/?page={page-1}" if page > 0 else ""
+
         return {
-            "page": "page_count",
-            "total_pages": "total",
-            "news_found": news_found,
-            "data": array_of_links
+            "page": int(page),
+            "next": f"/api/{subdomain}/?page={page+1}",
+            "prev": prev,
+            "total_pages": int(total_pages['href'].replace('?page=', '')),
+            "news_found": int(news_found),
+            "data": unique_links
         }
     else:
         return {
             "news_found": news_found,
-            "data": array_of_links
+            "data": unique_links
         }
 
 
@@ -63,14 +73,17 @@ def parse_article(link):
     res = requests.get(prepare_url(link))
     soup = BeautifulSoup(res.content, 'html.parser')
     article = soup.find('article', role='article')
+
     if article:
         image = article.find('img')['src'] if article.find('img') else None
+        date = soup.find('div', class_='moreInfo').text.strip()
         header = article.find(
             'div', class_='field field--name-field-lead field--type-string-long field--label-hidden field--item').text.strip() if article.find('div', class_='field field--name-field-lead field--type-string-long field--label-hidden field--item') else None
         quote = article.find('blockquote').text.strip(
         ) if article.find('blockquote') else None
         obj = {
             "img": f'{base_url}{image}',
+            "date": date,
             "header": header,
             "quote": quote
         }

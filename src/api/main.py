@@ -1,5 +1,4 @@
-
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from scraper.utils import parse_pap
 
 app = FastAPI()
@@ -32,10 +31,10 @@ async def root():
 
 
 @app.get("/api/{subdomain}")
-async def root(subdomain: str):
-    return parse_pap(subdomain)
+async def root(subdomain: str, page: int = Query(0)):
+    return parse_pap(subdomain, page)
 
 
 @app.get("/api")
 async def root():
-    return parse_pap('')
+    return parse_pap('', None)
