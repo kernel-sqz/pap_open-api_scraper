@@ -1,9 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
-
+from concurrent import futures
 
 base_url = 'https://www.pap.pl'
-
 languages = ['en', 'ru', 'ua']
 
 
@@ -17,25 +16,35 @@ def prepare_url(url):
 def parse_pap(subdomain):
     array_of_links = []
     res = requests.get(f'{base_url}/{subdomain}')
-
-    soup = BeautifulSoup(res.content, 'html.parser')
+    soup = BeautifulSoup(res.text, 'html.parser')
     news_list = soup.find_all('ul', class_='newsList')
-
     news_found = 0
 
     if news_list:
-        for news in news_list:
-            links = news.find_all('a')
-            for link in links:
-                print(link.text.strip())
-                obj = {
-                    "title": link.text.strip(),
-                    "link": prepare_url(link['href']),
-                    "article": parse_article(link['href'])
-                }
-                if len(link.text.strip()) > 0 and obj not in array_of_links:
-                    array_of_links.append(obj)
-                    news_found = news_found + 1
+        with futures.ThreadPoolExecutor() as executor:
+            link_futures = []
+
+            for news in news_list:
+                links = news.find_all('a')
+                for link in links:
+                    link_text = link.text.strip()
+                    if len(link_text) > 0:
+                        obj = {
+                            "title": link_text,
+                            "link": prepare_url(link['href']),
+                            "article": None
+                        }
+                        array_of_links.append(obj)
+                        link_future = executor.submit(
+                            parse_article, link['href'])
+                        link_futures.append((link_future, obj))
+
+            for link_future, obj in link_futures:
+                article = link_future.result()
+                obj['article'] = article
+                if article:
+                    news_found += 1
+
     if len(subdomain) > 0 and subdomain not in languages:
         return {
             "page": "page_count",
@@ -43,10 +52,11 @@ def parse_pap(subdomain):
             "news_found": news_found,
             "data": array_of_links
         }
-    return {
-        "news_found": news_found,
-        "data": array_of_links
-    }
+    else:
+        return {
+            "news_found": news_found,
+            "data": array_of_links
+        }
 
 
 def parse_article(link):
