@@ -1,6 +1,6 @@
 # PAP open-api
 
-PAP open-api is simple scraper of PAP.PL (Polska Agencja Prasowa). Script will parse the page and return  clean api.
+PAP open-api is simple scraper of PAP.PL (Polska Agencja Prasowa). Script will parse the page and return  clean api. Code uses multithreading for faster scraping.
 
 ## Run
 
@@ -55,6 +55,21 @@ and you will see that informations:
 ```
 
   > /api - parse main page (latest news/ articles)
+
+Example news object:
+
+```json
+{
+  "title": "Title of the article",
+  "link": "Web url to the article",
+  "article": {
+    "img": "Web url to the image of the article",
+    "date": "Date and last update",
+    "header": "Header of the article",
+    "quote": "Full article"
+  }
+}
+```
 
 
 
