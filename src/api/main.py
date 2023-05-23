@@ -37,4 +37,4 @@ async def root(subdomain: str, page: int = Query(0)):
 
 @app.get("/api")
 async def root():
-    return parse_pap('', None)
+    return parse_pap(None, None)

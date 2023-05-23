@@ -16,7 +16,7 @@ def prepare_url(url):
 def parse_pap(subdomain, page):
     link_dict = {}
     res = requests.get(
-        f'{base_url}/{subdomain}?page={page}') if subdomain else requests.get(f'{base_url}/{subdomain}')
+        f'{base_url}/{subdomain}?page={page}') if subdomain else requests.get(f'{base_url}')
     soup = BeautifulSoup(res.text, 'html.parser')
     news_list = soup.find_all('ul', class_='newsList')
     total_pages = soup.find('a', rel='last')
@@ -51,7 +51,7 @@ def parse_pap(subdomain, page):
 
     unique_links = list(link_dict.values())
 
-    if len(subdomain) > 0 and subdomain not in languages:
+    if subdomain and subdomain not in languages:
         prev = f"/api/{subdomain}/?page={page-1}" if page > 0 else ""
 
         return {
@@ -71,16 +71,18 @@ def parse_pap(subdomain, page):
 
 def parse_article(link):
     res = requests.get(prepare_url(link))
-    soup = BeautifulSoup(res.content, 'html.parser')
+    soup = BeautifulSoup(res.text, 'html.parser')
     article = soup.find('article', role='article')
 
     if article:
         image = article.find('img')['src'] if article.find('img') else None
-        date = soup.find('div', class_='moreInfo').text.strip()
+        date = soup.find('div', class_='moreInfo').text.strip(
+        ) if soup.find('div', class_='moreInfo') else None
+
         header = article.find(
             'div', class_='field field--name-field-lead field--type-string-long field--label-hidden field--item').text.strip() if article.find('div', class_='field field--name-field-lead field--type-string-long field--label-hidden field--item') else None
-        quote = article.find('blockquote').text.strip(
-        ) if article.find('blockquote') else None
+        quote = article.find('div', property="schema:text").text.strip(
+        ).replace('\n', ' ') if article.find('div', property="schema:text") else None
         obj = {
             "img": f'{base_url}{image}',
             "date": date,
