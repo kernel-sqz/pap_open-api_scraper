@@ -51,7 +51,7 @@ def parse_pap(subdomain, page):
 
     unique_links = list(link_dict.values())
 
-    if subdomain and subdomain not in languages:
+    if subdomain not in languages:
         prev = f"/api/{subdomain}/?page={page-1}" if page > 0 else ""
 
         return {
