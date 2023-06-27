@@ -60,14 +60,14 @@ Example news object:
 
 ```json
 {
-"title": "Oskarżony o gwałt i zamordowanie 27-letniej Polki na Kos będzie ponownie zeznawał w sądzie",
-"link": "https://www.pap.pl/aktualnosci/news,1590055,oskarzony-o-gwalt-i-zamordowanie-27-letniej-polki-na-kos-bedzie-ponownie",
-"article": {
-"img": "https://www.pap.pl/sites/default/files/styles/main_image/public/202306/anastazja_1_0_0.jpg?itok=X3BAzZ_W",
-"date": "2023-06-27 10:31 aktualizacja: 2023-06-27, 12:34",
-"header": "Mija czas, jaki oskarżony o porwanie, gwałt i zamordowanie 27-letniej Polki na Kos 32-letni Salahuddin S. z Bangladeszu dostał na przygotowanie swojej obrony. W południe ma ponownie zeznawać w sądzie – informują greckie media.",
-"quote": "Banglijczyk dostał czas do wtorku, aby przygotować swoją obronę. Zebrany przez policję materiał dowodowy, w tym nagrania z kamer oraz sygnały telefonów oskarżonego i ofiary wskazują, że to właśnie on jest odpowiedzialny za zabójstwo Polki.  Czytaj więcej        W domu, w którym przebywał Banglijczyk mający zarzut zamordowania 27-letniej Polki, mieszka kilku innych imigrantów [WIDEO]      Jak informują greckie media, oskarżony wyszukiwał na swoim telefonie sposoby, jak można usunąć dane z telefonu. Ponadto we wtorek CNN Greece podała, że policja szuka drugiego telefonu, który najpewniej posiadał oskarżony. W piątek z prowadzenia sprawy zrezygnował przydzielony z urzędu adwokat oskarżonego mężczyzny, Zafiris Drosos. Jak poinformował PAP jeden z policjantów, za morderstwo grozi Banglijczykowi dożywocie. Na Kos przebywa obecnie również zespół polskich detektywów, badających sprawę, pod kierownictwem Dawida Burzackiego. Anastazja zaginęła w poniedziałek 12 czerwca na greckiej wyspie Kos, gdzie pracowała w jednym z hoteli. W niedzielę 18 czerwca greckie media poinformowały, że znaleziono ciało 27-letniej Polki. Zwłoki zostały znalezione około godz. 19 czasu lokalnego, około kilometra od domu Salahuddina S., aresztowanego wcześniej przez policję, i 500 metrów od miejsca, w którym znaleziono telefon komórkowy Polki. (PAP) jc/"
-}
+  "title": "Oskarżony o gwałt i zamordowanie 27-letniej Polki na Kos będzie ponownie zeznawał w sądzie",
+  "link": "https://www.pap.pl/aktualnosci/news,1590055,oskarzony-o-gwalt-i-zamordowanie-27-letniej-polki-na-kos-bedzie-ponownie",
+  "article": {
+    "img": "https://www.pap.pl/sites/default/files/styles/main_image/public/202306/anastazja_1_0_0.jpg?itok=X3BAzZ_W",
+    "date": "2023-06-27 10:31 aktualizacja: 2023-06-27, 12:34",
+    "header": "Mija czas, jaki oskarżony o porwanie, gwałt i zamordowanie 27-letniej Polki na Kos 32-letni Salahuddin S. z Bangladeszu dostał na przygotowanie swojej obrony. W południe ma ponownie            zeznawać w sądzie – informują greckie media.",
+    "quote": "Banglijczyk dostał czas do wtorku, aby przygotować swoją obronę. Zebrany przez policję materiał dowodowy, w tym nagrania z kamer oraz sygnały telefonów oskarżonego i ofiary wskazują, że to     właśnie on jest odpowiedzialny za zabójstwo Polki.  Czytaj więcej        W domu, w którym przebywał Banglijczyk mający zarzut zamordowania 27-letniej Polki, mieszka kilku innych imigrantów [WIDEO]       Jak informują greckie media, oskarżony wyszukiwał na swoim telefonie sposoby, jak można usunąć dane z telefonu. Ponadto we wtorek CNN Greece podała, że policja szuka drugiego telefonu, który             najpewniej posiadał oskarżony. W piątek z prowadzenia sprawy zrezygnował przydzielony z urzędu adwokat oskarżonego mężczyzny, Zafiris Drosos. Jak poinformował PAP jeden z policjantów, za morderstwo      grozi Banglijczykowi dożywocie. Na Kos przebywa obecnie również zespół polskich detektywów, badających sprawę, pod kierownictwem Dawida Burzackiego. Anastazja zaginęła w poniedziałek 12 czerwca na       greckiej wyspie Kos, gdzie pracowała w jednym z hoteli. W niedzielę 18 czerwca greckie media poinformowały, że znaleziono ciało 27-letniej Polki. Zwłoki zostały znalezione około godz. 19 czasu           lokalnego, około kilometra od domu Salahuddina S., aresztowanego wcześniej przez policję, i 500 metrów od miejsca, w którym znaleziono telefon komórkowy Polki. (PAP) jc/"
+  }
 }
 ```
 
